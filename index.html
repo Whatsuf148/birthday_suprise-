@@ -227,6 +227,7 @@ footer{position:relative;z-index:2;text-align:center;padding:50px 20px 90px;opac
 const CONFIG = {
   name: "Aayusha",                        // her name
   from: "Yours, Sachin",                 // sign-off
+  birthdayMonthDay: [11, 3],            // her birthday: 3 November
   birthday: "2025-10-10T00:00:00",       // date we first talked (live counter)
   music: "",                              // e.g. "media/song.mp3" (leave empty for none)
   heroMessage: "You make ordinary days feel like magic. Today is all about you — you deserve every smile, every wish, every bit of happiness.",
@@ -310,6 +311,17 @@ $('#letter').innerHTML = CONFIG.letter.map(p=>`<p>${p}</p>`).join('') + `<p clas
 /* ---------- Scroll reveal ---------- */
 const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- Birthday line ---------- */
+(function(){
+  const [m,d]=CONFIG.birthdayMonthDay, now=new Date();
+  let t=new Date(now.getFullYear(),m-1,d);
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  if(t<today) t=new Date(now.getFullYear()+1,m-1,d);
+  const days=Math.round((t-today)/864e5);
+  $('.pre').textContent = days===0 ? 'Today the world got brighter'
+    : days===1 ? 'Your birthday is tomorrow' : `Only ${days} days until your birthday`;
+})();
 
 /* ---------- Typing ---------- */
 function typeText(){
