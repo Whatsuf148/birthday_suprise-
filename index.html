@@ -79,6 +79,10 @@ h2{font-family:var(--script);font-size:clamp(2.6rem,7vw,4.2rem);font-weight:400;
 #lightbox.on{display:flex}
 #lightbox img{max-width:100%;max-height:90vh;border-radius:14px}
 
+/* ---------- Videos ---------- */
+.videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.videos video{width:100%;max-height:520px;border-radius:20px;background:#000;box-shadow:0 12px 30px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.15)}
+
 /* ---------- Reasons (flip cards) ---------- */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
 .card{perspective:900px;height:190px;cursor:pointer}
@@ -173,6 +177,13 @@ footer{position:relative;z-index:2;text-align:center;padding:50px 20px 90px;opac
   <div class="gallery" id="gallery"></div>
 </section>
 
+<!-- ============ VIDEOS ============ -->
+<section class="reveal">
+  <h2>Moments in Motion</h2>
+  <p class="sub">Tap play and relive them</p>
+  <div class="videos" id="videos"></div>
+</section>
+
 <!-- ============ REASONS ============ -->
 <section class="reveal">
   <h2>Reasons I Adore You</h2>
@@ -221,13 +232,21 @@ const CONFIG = {
   heroMessage: "You make ordinary days feel like magic. Today is all about you — you deserve every smile, every wish, every bit of happiness.",
   // Put photos in /photos and list them here. Missing files show a pretty placeholder.
   photos: [
-    { src: "photos/1.jpg", caption: "That smile" },
-    { src: "photos/2.jpg", caption: "My favourite day" },
-    { src: "photos/3.jpg", caption: "Us" },
-    { src: "photos/4.jpg", caption: "Pure joy" },
-    { src: "photos/5.jpg", caption: "Forever" },
-    { src: "photos/6.jpg", caption: "You" }
+    { src: "photos/1.jpg", caption: "Little Aayusha" },
+    { src: "photos/10.jpg", caption: "Always this cute" },
+    { src: "photos/2.jpg", caption: "Surprised by a rose" },
+    { src: "photos/3.jpg", caption: "Little love notes" },
+    { src: "photos/4.jpg", caption: "Late-night walks" },
+    { src: "photos/5.jpg", caption: "Peace signs and smoothies" },
+    { src: "photos/6.jpg", caption: "Still smiling" },
+    { src: "photos/7.jpg", caption: "Walking beside you" },
+    { src: "photos/8.jpg", caption: "Tongue out, as always" },
+    { src: "photos/9.jpg", caption: "My favourite smile" },
+    { src: "photos/12.jpg", caption: "Mirror, mirror" },
+    { src: "photos/11.jpg", caption: "Our video calls" }
   ],
+  videos: ["media/video1.mp4","media/video2.mp4","media/video3.mp4","media/video4.mp4"],
+
   reasons: [
     ["💫","Your smile lights up every room you walk into."],
     ["🌸","You are the kindest soul I have ever known."],
@@ -273,6 +292,8 @@ CONFIG.photos.forEach((p,i)=>{
   g.append(f);
 });
 $('#lightbox').onclick = () => $('#lightbox').classList.remove('on');
+
+CONFIG.videos.forEach(v=>{const el=document.createElement('video');el.src=v;el.controls=true;el.playsInline=true;el.preload='metadata';el.onplay=()=>{if(audio&&!audio.paused){audio.pause();$('#music').classList.remove('play')}};$('#videos').append(el)});
 
 CONFIG.reasons.forEach(([e,t])=>{
   const c=document.createElement('div'); c.className='card';
